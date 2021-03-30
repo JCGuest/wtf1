@@ -1,3 +1,3 @@
 class Search {
-  constructor();
+  constructor(public query: string) {}
 }
