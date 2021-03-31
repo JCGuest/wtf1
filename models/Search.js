@@ -2,10 +2,14 @@ class Search {
     constructor() {
         this.url = 'http://ergast.com/api/f1';
     }
-    translate() {
+    getString() {
         console.log(this.query);
     }
-    callApi() {
+    search() {
         console.log(this.url);
     }
 }
+const search = new Search();
+search.query = 'this is the query';
+search.getString();
+search.search();
