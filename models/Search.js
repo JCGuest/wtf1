@@ -1,6 +1,11 @@
-var Search = /** @class */ (function () {
-    function Search(query) {
-        this.query = query;
+class Search {
+    constructor() {
+        this.url = 'http://ergast.com/api/f1';
     }
-    return Search;
-}());
+    translate() {
+        console.log(this.query);
+    }
+    callApi() {
+        console.log(this.url);
+    }
+}
