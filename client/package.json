@@ -12,7 +12,6 @@
   "scripts": {
     "start": "react-scripts start"
   },
-  "proxy": "http://localhost:5000",
   "browserslist": {
     "production": [
       ">0.2%",
