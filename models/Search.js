@@ -1,15 +1,13 @@
 class Search {
-    constructor() {
-        this.url = 'http://ergast.com/api/f1';
-    }
-    getString() {
-        console.log(this.query);
-    }
-    search() {
-        console.log(this.url);
-    }
+  constructor(searchQuery) {
+    this.url = 'http://ergast.com/api/f1';
+    this.query = searchQuery;
+  }
+  string() {
+    return this.query;
+  }
+  search() {
+    return this.url;
+  }
 }
-const search = new Search();
-search.query = 'this is the query';
-search.getString();
-search.search();
+module.exports = Search;
