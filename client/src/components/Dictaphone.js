@@ -26,8 +26,8 @@ const Dictaphone = () => {
     axios
       .post('http://localhost:5000/search', body, config)
       .then((json) => {
-        // console.log(json.data.string);
-        setResult(`${json.data.string}`);
+        setResult(`${json.data}`);
+        console.log(json.data);
       })
       .catch((err) => console.error(err));
   }

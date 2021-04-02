@@ -6,10 +6,7 @@ const Search = require('../models/Search.js');
 router.post('/', (req, res) => {
   try {
     const search = new Search(req.body.query);
-    const result = {
-      string: search.string(),
-      search: search.search()
-    };
+    const result = search.string();
     res.json(result);
   } catch (err) {
     console.error(err);
