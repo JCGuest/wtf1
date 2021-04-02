@@ -9,24 +9,25 @@ const Dictaphone = () => {
   const [transcript, transcribe] = useState(
     'who won the 2005 Japanese grand prix'
   );
-  const [result, setResult] = useState();
+  const [result, setResult] = useState('');
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null;
   }
 
   function query() {
-    // debugger;
+    const config = {
+      headers: {
+        'Contenet-Type': 'application/json'
+      }
+    };
+    const body = { query: transcript };
+
     axios
-      .post(
-        'http://localhost:5000/search',
-        {
-          query: transcript
-        },
-        { withCredentials: true }
-      )
+      .post('http://localhost:5000/search', body, config)
       .then((json) => {
-        setResult(json.data.result);
+        // console.log(json.data.string);
+        setResult(`${json.data.string}`);
       })
       .catch((err) => console.error(err));
   }
