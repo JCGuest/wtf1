@@ -7,7 +7,7 @@
     "start": "tsc && node .",
     "server": "nodemon server",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" \"tsc -w\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "devDependencies": {
     "@types/node": "^14.14.31",

@@ -4,18 +4,18 @@ class Search {
         this.url = 'http://ergast.com/api/f1';
         this.query = searchQuery;
     }
-    string() {
+    async string() {
         ('who won the 2005 Japanese Grand Prix');
-        axios
-            .get('http://ergast.com/api/f1/2005/18/results/1')
+        const result = await axios
+            .get('http://ergast.com/api/f1/2005/18/results/1.json')
             .then((json) => {
             const data = json.data;
-            var parser = new XMLSerializer();
-            var str = parser.serializeToString(data);
-            console.log(str);
+            return data;
+            // console.log(data.MRData.RaceTable['Races']['Results']);
         })
             .catch((err) => console.error(err));
-        return 'http://ergast.com/api/f1/2005/18/results/1';
+        console.log(result);
+        // return 'http://ergast.com/api/f1/2005/18/results/1';
     }
     search() {
         const urlFull = this.url + this.string();
@@ -23,3 +23,4 @@ class Search {
     }
 }
 module.exports = Search;
+///
