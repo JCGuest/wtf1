@@ -15,7 +15,7 @@ const Dictaphone = () => {
     return null;
   }
 
-  async function query() {
+  function query() {
     const config = {
       headers: {
         'Contenet-Type': 'application/json'
@@ -23,11 +23,10 @@ const Dictaphone = () => {
     };
     const body = { query: transcript };
 
-    const anwser = await axios
+    axios
       .post('http://localhost:5000/search', body, config)
       .then((json) => {
-        const answer = JSON.stringify(json.data);
-        return answer;
+        return json.data;
       })
       .then((answer) => setResult(answer))
       .catch((err) => console.error(err));
