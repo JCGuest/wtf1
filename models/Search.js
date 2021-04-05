@@ -13,12 +13,12 @@ class Search {
             console.log(data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
                 ' ' +
                 data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
-            const answer = JSON.stringify(data.MRData.RaceTable.Races[0].Results[0].Driver.givenName) +
+            return (data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
                 ' ' +
-                JSON.stringify(data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
-            return answer;
+                data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
         })
             .catch((err) => console.error(err));
+        return result;
     }
     search() {
         const urlFull = this.url + this.string();
