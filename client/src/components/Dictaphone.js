@@ -5,10 +5,10 @@ import SpeechRecognition, {
 import axios from 'axios';
 
 const Dictaphone = () => {
-  const { transcript0, resetTranscript } = useSpeechRecognition();
-  const [transcript, transcribe] = useState(
-    'who won the 2005 Japanese grand prix'
-  );
+  const { transcript, resetTranscript } = useSpeechRecognition();
+  // const [transcript, transcribe] = useState(
+  //   'who won the 2019 austrian grand prix'
+  // );
   const [result, setResult] = useState('');
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -21,7 +21,7 @@ const Dictaphone = () => {
         'Contenet-Type': 'application/json'
       }
     };
-    const body = { query: transcript };
+    let body = { query: transcript };
 
     axios
       .post('http://localhost:5000/search', body, config)

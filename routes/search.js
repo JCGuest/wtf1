@@ -5,10 +5,10 @@ const Search = require('../models/Search.js');
 
 router.post('/', async (req, res) => {
   try {
-    const search = new Search(req.body.query);
-    // const round = await search.findRound();
-    // console.log(round);
-    const result = await search.search();
+    let search = new Search(req.body.query);
+    let round = await search.findRound();
+    console.log(round);
+    let result = await search.search();
     console.log(result);
     res.json(result);
   } catch (err) {

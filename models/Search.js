@@ -5,16 +5,11 @@ class Search {
         this.query = searchQuery;
     }
     async search() {
-        ('who won the 2005 Japanese Grand Prix');
-        const result = await axios
-            .get('http://ergast.com/api/f1/2005/18/results/1.json')
+        let roundNumber = await this.findRound();
+        let result = await axios
+            .get(`http://ergast.com/api/f1/${this.getYear(this.query)}/${roundNumber}/results/1.json`)
             .then((json) => {
             const data = json.data;
-            // console.log(
-            //   data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
-            //     ' ' +
-            //     data.MRData.RaceTable.Races[0].Results[0].Driver.familyName
-            // );
             return (data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
                 ' ' +
                 data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
@@ -27,10 +22,10 @@ class Search {
         return urlFull;
     }
     async findRound() {
-        const answer = await axios
+        let answer = await axios
             .get(`http://ergast.com/api/f1/${this.getYear(this.query)}.json`)
             .then((json) => {
-            const data = json.data;
+            let data = json.data;
             return data.MRData.RaceTable.Races.find((race) => {
                 // console.log(race.raceName);
                 return (race.raceName.toString().toLowerCase() == 'japanese grand prix');
@@ -40,9 +35,9 @@ class Search {
         return answer.round;
     }
     getYear(query) {
-        const array = query.split(' ');
-        const year = array.find((word) => {
-            const letters = word.split('');
+        let array = query.split(' ');
+        let year = array.find((word) => {
+            let letters = word.split('');
             if (letters[0] == '1') {
                 return word;
             }
