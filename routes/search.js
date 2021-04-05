@@ -7,7 +7,8 @@ router.post('/', (req, res) => {
   try {
     const search = new Search(req.body.query);
     const result = search.string();
-    res.json(result);
+    const answer = JSON.stringify(result);
+    res.send(answer);
   } catch (err) {
     console.error(err);
     res.status(500, 'Server Error');

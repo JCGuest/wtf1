@@ -10,12 +10,15 @@ class Search {
             .get('http://ergast.com/api/f1/2005/18/results/1.json')
             .then((json) => {
             const data = json.data;
-            return data;
-            // console.log(data.MRData.RaceTable['Races']['Results']);
+            console.log(data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
+                ' ' +
+                data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
+            const answer = JSON.stringify(data.MRData.RaceTable.Races[0].Results[0].Driver.givenName) +
+                ' ' +
+                JSON.stringify(data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
+            return answer;
         })
             .catch((err) => console.error(err));
-        console.log(result);
-        // return 'http://ergast.com/api/f1/2005/18/results/1';
     }
     search() {
         const urlFull = this.url + this.string();
