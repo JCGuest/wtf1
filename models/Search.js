@@ -28,7 +28,7 @@ class Search {
     }
     async findRound() {
         const answer = await axios
-            .get('http://ergast.com/api/f1/2005.json')
+            .get(`http://ergast.com/api/f1/${this.getYear(this.query)}.json`)
             .then((json) => {
             const data = json.data;
             return data.MRData.RaceTable.Races.find((race) => {
@@ -37,8 +37,20 @@ class Search {
             });
         })
             .catch((err) => console.error(err));
-        return answer;
+        return answer.round;
+    }
+    getYear(query) {
+        const array = query.split(' ');
+        const year = array.find((word) => {
+            const letters = word.split('');
+            if (letters[0] == '1') {
+                return word;
+            }
+            if (letters[0] == '2') {
+                return word;
+            }
+        });
+        return year;
     }
 }
 module.exports = Search;
-///
