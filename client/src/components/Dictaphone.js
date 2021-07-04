@@ -5,17 +5,17 @@ import SpeechRecognition, {
 import axios from 'axios';
 
 const Dictaphone = () => {
-  const { transcript, resetTranscript } = useSpeechRecognition();
-  // const [transcript, transcribe] = useState(
-  //   'who won the 2019 austrian grand prix'
-  // );
+  // const { transcript, resetTranscript } = useSpeechRecognition();
+  const [transcript, resetTranscript] = useState(
+    'who won the 2019 austrian grand prix'
+  );
   const [result, setResult] = useState('');
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null;
   }
 
-  function query() {
+  function sendQuery() {
     const config = {
       headers: {
         'Contenet-Type': 'application/json'
@@ -28,7 +28,7 @@ const Dictaphone = () => {
       .then((json) => {
         return json.data;
       })
-      .then((answer) => setResult(answer))
+      .then((queryResult) => setResult(queryResult))
       .catch((err) => console.error(err));
   }
 
@@ -38,7 +38,7 @@ const Dictaphone = () => {
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
       <button onClick={resetTranscript}>Reset</button>
       <p>{transcript}</p>
-      <button onClick={() => query()}>Send</button>
+      <button onClick={() => sendQuery()}>Send</button>
       <p>{result}</p>
     </div>
   );

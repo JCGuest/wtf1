@@ -3,6 +3,7 @@ const axios = require('axios');
 class Search {
   public query: string;
   public url: string;
+  public raceName: string;
 
   constructor(searchQuery: string) {
     this.url = 'http://ergast.com/api/f1';
@@ -30,10 +31,10 @@ class Search {
     return result;
   }
 
-  createURL() {
-    const urlFull: string = this.url + this.search();
-    return urlFull;
-  }
+  // createURL() {
+  //   const urlFull: string = this.url + this.search();
+  //   return urlFull;
+  // }
 
   async findRound() {
     let answer = await axios
@@ -41,18 +42,17 @@ class Search {
       .then((json) => {
         let data = json.data;
         return data.MRData.RaceTable.Races.find((race) => {
-          // console.log(race.raceName);
           return (
-            race.raceName.toString().toLowerCase() == 'japanese grand prix'
+            race.raceName.toString().toLowerCase() == this.raceName
           );
         });
       })
       .catch((err) => console.error(err));
 
     return answer.round;
-  }
+  };
 
-  getYear(query) {
+  getYear(query: string) {
     let array = query.split(' ');
     let year = array.find((word) => {
       let letters = word.split('');

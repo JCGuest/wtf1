@@ -7,12 +7,12 @@ router.post('/', async (req, res) => {
   try {
     let search = new Search(req.body.query);
     let round = await search.findRound();
-    console.log(round);
+    console.log("ROUND >>" + round);
     let result = await search.search();
-    console.log(result);
+    console.log("RESULT >>" + result);
     res.json(result);
   } catch (err) {
-    console.error(err);
+    console.error("ERROR >>" + err);
     res.status(500, 'Server Error');
   }
 });
