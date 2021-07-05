@@ -5,10 +5,10 @@ import SpeechRecognition, {
 import axios from 'axios';
 
 const Dictaphone = () => {
-  // const { transcript, resetTranscript } = useSpeechRecognition();
-  const [transcript, resetTranscript] = useState(
-    'who won the 2019 austrian grand prix'
-  );
+  const { transcript, resetTranscript } = useSpeechRecognition();
+  // const [transcript, resetTranscript] = useState(
+  //   'who won the 2008 chinese grand prix'
+  // );
   const [result, setResult] = useState('');
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -32,11 +32,16 @@ const Dictaphone = () => {
       .catch((err) => console.error(err));
   }
 
+  function resetResult() {
+    resetTranscript();
+    setResult('');
+  }
+
   return (
     <div>
       <button onClick={SpeechRecognition.startListening}>Start</button>
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
-      <button onClick={resetTranscript}>Reset</button>
+      <button onClick={resetResult}>Reset</button>
       <p>{transcript}</p>
       <button onClick={() => sendQuery()}>Send</button>
       <p>{result}</p>

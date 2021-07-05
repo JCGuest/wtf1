@@ -2,22 +2,22 @@ const axios = require('axios');
 
 class Search {
   public query: string;
-  public url: string;
   public raceName: string;
   public year: string;
+  public position: string;
 
   constructor(searchQuery: string) {
-    this.url = 'http://ergast.com/api/f1';
     this.query = searchQuery;
     this.raceName = this.getName(searchQuery);
     this.year = this.getYear(searchQuery);
+    this.position = this.getPosition(searchQuery);
   }
 
   async search() {
     let roundNumber = await this.findRound();
     let result = await axios
       .get(
-        `http://ergast.com/api/f1/${this.year}/${roundNumber}/results/1.json`
+        `http://ergast.com/api/f1/${this.year}/${roundNumber}/results/${this.position}.json`
       )
       .then((json) => {
         const data = json.data;
@@ -131,12 +131,82 @@ class Search {
     let fullName = name.toLowerCase() + ' grand prix';
     return fullName;
   }
+
+  getPosition(query) {
+    let grid = [
+      'winner',
+      'won',
+      'first',
+      'second',
+      'third',
+      'fourth',
+      'fifth',
+      'sixth',
+      'seventh',
+      'eighth',
+      'ninth',
+      'tenth',
+      '11th',
+      '12th',
+      '13th',
+      '14th',
+      '15th',
+      '16th',
+      '17th',
+      '18th',
+      '19th',
+      '20th',
+      '21st',
+      '22nd',
+      '23rd',
+      '24th'
+    ];
+    const gridTranslator = {
+      won: 1,
+      winner: 1,
+      first: 1,
+      second: 2,
+      third: 3,
+      fourth: 4,
+      fifth: 5,
+      sixth: 6,
+      seventh: 7,
+      eighth: 8,
+      ninth: 9,
+      '10th': 10,
+      '11th': 11,
+      '12th': 12,
+      '13th': 13,
+      '14th': 14,
+      '15th': 15,
+      '16th': 16,
+      '17th': 17,
+      '18th': 18,
+      '19th': 19,
+      '20th': 20,
+      '21st': 21,
+      '22nd': 22,
+      '23rd': 23,
+      '24th': 24
+    };
+    const queryArray = query.split(' ');
+    let position = '';
+
+    while (!position) {
+      for (let x = 0; x < grid.length; x++) {
+        for (let i = 0; i < queryArray.length; i++) {
+          grid[x] == queryArray[i].toLowerCase() ? (position = grid[x]) : -1;
+        }
+      }
+    }
+    return gridTranslator[position];
+  }
 }
 
-const Q = new Search('who won the 2009 Italian Grand Prix?');
-console.log(Q.query);
-console.log(Q.url);
-console.log(Q.raceName);
-console.log(Q.year);
+// const Q = new Search('who won the 2009 Italian Grand Prix?');
+// console.log(Q.query);
+// console.log(Q.url);
+// console.log(Q.raceName);
+// console.log(Q.year);
 
 module.exports = Search;
