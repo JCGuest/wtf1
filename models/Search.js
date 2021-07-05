@@ -39,11 +39,13 @@ class Search {
         let array = query.split(' ');
         let year = array.find((word) => {
             let letters = word.split('');
-            if (letters[0] == '1') {
-                return word;
-            }
-            if (letters[0] == '2') {
-                return word;
+            if (!letters.includes('t') && !letters.includes('d')) {
+                if (letters[0] == '1') {
+                    return word;
+                }
+                if (letters[0] == '2') {
+                    return word;
+                }
             }
         });
         return year;
@@ -126,7 +128,7 @@ class Search {
             'seventh',
             'eighth',
             'ninth',
-            'tenth',
+            '10th',
             '11th',
             '12th',
             '13th',
