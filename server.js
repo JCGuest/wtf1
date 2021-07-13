@@ -5,6 +5,12 @@ const cors = require('cors');
 
 app.use(express.json()); // needed for parsing json requests
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 app.use(
   '/search',
   cors({ origin: 'http://localhost:3000' }),
