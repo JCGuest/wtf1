@@ -8,21 +8,22 @@ class Search {
     }
     async search() {
         let roundNumber = await this.findRound();
-        let result = await axios
-            .get(`http://ergast.com/api/f1/${this.year}/${roundNumber}/results/${this.position}.json`)
-            .then((json) => {
-            const data = json.data;
-            return (data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
-                ' ' +
-                data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
-        })
-            .catch((err) => console.error(err));
-        return result;
+        if (roundNumber) {
+            let result = await axios
+                .get(`http://ergast.com/api/f1/${this.year}/${roundNumber}/results/${this.position}.json`)
+                .then((json) => {
+                const data = json.data;
+                return (data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
+                    ' ' +
+                    data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
+            })
+                .catch((err) => console.error(err));
+            return result;
+        }
+        else {
+            return 'No results';
+        }
     }
-    // createURL() {
-    //   const urlFull: string = this.url + this.search();
-    //   return urlFull;
-    // }
     async findRound() {
         let answer = await axios
             .get(`http://ergast.com/api/f1/${this.year}.json`)
@@ -51,7 +52,7 @@ class Search {
         return year;
     }
     getName(query) {
-        let gpNames = [
+        const gpNames = [
             'australian',
             'australia',
             'bahrain',

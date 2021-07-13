@@ -15,27 +15,26 @@ class Search {
 
   async search() {
     let roundNumber = await this.findRound();
-    let result = await axios
-      .get(
-        `http://ergast.com/api/f1/${this.year}/${roundNumber}/results/${this.position}.json`
-      )
-      .then((json) => {
-        const data = json.data;
-        return (
-          data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
-          ' ' +
-          data.MRData.RaceTable.Races[0].Results[0].Driver.familyName
-        );
-      })
-      .catch((err) => console.error(err));
+    if (roundNumber) {
+      let result = await axios
+        .get(
+          `http://ergast.com/api/f1/${this.year}/${roundNumber}/results/${this.position}.json`
+        )
+        .then((json) => {
+          const data = json.data;
+          return (
+            data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
+            ' ' +
+            data.MRData.RaceTable.Races[0].Results[0].Driver.familyName
+          );
+        })
+        .catch((err) => console.error(err));
 
-    return result;
+      return result;
+    } else {
+      return 'No results';
+    }
   }
-
-  // createURL() {
-  //   const urlFull: string = this.url + this.search();
-  //   return urlFull;
-  // }
 
   async findRound() {
     let answer = await axios
@@ -68,7 +67,7 @@ class Search {
   }
 
   getName(query: string) {
-    let gpNames = [
+    const gpNames = [
       'australian',
       'australia',
       'bahrain',
@@ -126,11 +125,14 @@ class Search {
     while (!name) {
       for (let x = 0; x < gpNames.length; x++) {
         for (let i = 0; i < queryArray.length; i++) {
-          gpNames[x] == queryArray[i].toLowerCase() ? (name = gpNames[x]) : -1;
+          gpNames[x] == queryArray[i].toLowerCase()
+            ? (name = gpNames[x])
+            : null;
         }
       }
     }
     let fullName = name.toLowerCase() + ' grand prix';
+    console.log(fullName);
     return fullName;
   }
 
