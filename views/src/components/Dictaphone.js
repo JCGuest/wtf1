@@ -5,10 +5,11 @@ import SpeechRecognition, {
 import axios from 'axios';
 
 const Dictaphone = () => {
-  // const { transcript, resetTranscript } = useSpeechRecognition();
-  const [transcript, resetTranscript] = useState(
-    'who won the 2021 austrian grand prix'
-  );
+  const { transcript, resetTranscript } = useSpeechRecognition();
+  // For testing purposes, we'll just use a hard-coded transcript
+  // const [transcript, resetTranscript] = useState(
+  //   'who won the 2021 austrian grand prix'
+  // );
   const [result, setResult] = useState('');
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
