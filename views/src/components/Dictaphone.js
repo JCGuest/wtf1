@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const Dictaphone = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
-  // For testing purposes, we'll just use a hard-coded transcript
   // const [transcript, resetTranscript] = useState(
   //   'who won the 2021 austrian grand prix'
   // );
@@ -22,7 +21,8 @@ const Dictaphone = () => {
         'Contenet-Type': 'application/json'
       }
     };
-    let body = { query: transcript };
+    const textInput = document.querySelector('#root > div > div > textarea');
+    const body = { query: transcript ? transcript : textInput.value };
 
     axios
       .post('/search', body, config)
@@ -36,19 +36,25 @@ const Dictaphone = () => {
   function resetResult() {
     resetTranscript();
     setResult('');
+    const textInput = document.querySelector('#root > div > div > textarea');
+    textInput.value = '';
   }
 
   return (
-    <div className='main'>
+    <div className='search'>
       <div>
         <button onClick={SpeechRecognition.startListening}>Start</button>
-        <button onClick={SpeechRecognition.stopListening}>Stop</button>
+        <button onClick={() => sendQuery()}>Send</button>
+
+        {/* <button onClick={SpeechRecognition.stopListening}>Stop</button> */}
         <button onClick={resetResult}>Reset</button>
       </div>
-
-      <p>{transcript}</p>
-      <button onClick={() => sendQuery()}>Send</button>
-      <p>{result}</p>
+      <textarea
+        className='text-input'
+        placeholder='tap here to type or click start to record'
+      ></textarea>
+      <p>{transcript ? transcript + '?' : ''}</p>
+      <p>{result ? 'Answer: ' + result : ''}</p>
     </div>
   );
 };
