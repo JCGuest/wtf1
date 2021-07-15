@@ -15,6 +15,12 @@ const Dictaphone = () => {
     return null;
   }
 
+  function startListening() {
+    const textInput = document.querySelector('#root > div > div > textarea');
+    textInput.style.display = 'none';
+    SpeechRecognition.startListening();
+  }
+
   function sendQuery() {
     const config = {
       headers: {
@@ -37,21 +43,20 @@ const Dictaphone = () => {
     resetTranscript();
     setResult('');
     const textInput = document.querySelector('#root > div > div > textarea');
+    textInput.style.display = 'inline';
     textInput.value = '';
   }
 
   return (
     <div className='search'>
-      <div>
-        <button onClick={SpeechRecognition.startListening}>Start</button>
+      <div className='button-div'>
+        <button onClick={startListening}>Start</button>
         <button onClick={() => sendQuery()}>Send</button>
-
-        {/* <button onClick={SpeechRecognition.stopListening}>Stop</button> */}
         <button onClick={resetResult}>Reset</button>
       </div>
       <textarea
         className='text-input'
-        placeholder='tap here to type or click start to record'
+        placeholder='click here to type or click start to record'
       ></textarea>
       <p>{transcript ? transcript + '?' : ''}</p>
       <p>{result ? 'Answer: ' + result : ''}</p>

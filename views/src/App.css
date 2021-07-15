@@ -13,7 +13,8 @@ body {
   border: none;
   margin-top: 10px;
   font-family: 'Source Sans Pro', monospace;
-  width: 60%;
+  font-size: 1.5rem;
+  width: 65%;
 }
 .text-input:focus {
   outline: none;
@@ -23,10 +24,15 @@ body {
   margin-top: 30vh;
   font-family: 'Source Sans Pro', monospace;
   position: relative;
+  font-size: 1.5rem;
 }
 
 button {
   font-family: 'Source Sans Pro', monospace;
+  font-size: 1.5rem;
   background-color: rgb(255, 110, 219);
   border-radius: 20%;
+  width: 90px;
+  height: 40px;
+  margin: 10px;
 }
