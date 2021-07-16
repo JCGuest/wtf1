@@ -6,6 +6,7 @@ body {
   place-content: 'center';
   text-align: center;
   font-family: 'Source Sans Pro', sans-serif;
+  text-shadow: 0.2px 0.2px 0.2px #000;
 }
 
 .text-input {
@@ -14,7 +15,9 @@ body {
   margin-top: 10px;
   font-family: 'Source Sans Pro', monospace;
   font-size: 1.5rem;
-  width: 65%;
+  width: 35%;
+  color: white;
+  padding-top: 20px;
 }
 .text-input:focus {
   outline: none;
@@ -25,6 +28,7 @@ body {
   font-family: 'Source Sans Pro', monospace;
   position: relative;
   font-size: 1.5rem;
+  color: white;
 }
 
 button {
@@ -35,4 +39,5 @@ button {
   width: 90px;
   height: 40px;
   margin: 10px;
+  color: white;
 }

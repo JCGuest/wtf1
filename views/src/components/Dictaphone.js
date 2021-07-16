@@ -49,6 +49,9 @@ const Dictaphone = () => {
 
   return (
     <div className='search'>
+      <h2>
+        <small>What the F1? Race Results Bot</small>
+      </h2>
       <div className='button-div'>
         <button onClick={startListening}>Start</button>
         <button onClick={() => sendQuery()}>Send</button>
@@ -56,7 +59,7 @@ const Dictaphone = () => {
       </div>
       <textarea
         className='text-input'
-        placeholder='click here to type or click start to record'
+        placeholder='click here to type or click Start to record'
       ></textarea>
       <p>{transcript ? transcript + '?' : ''}</p>
       <p>{result ? 'Answer: ' + result : ''}</p>
