@@ -49,9 +49,7 @@ const Dictaphone = () => {
 
   return (
     <div className='search'>
-      <h2>
-        <small>What the F1? Race Results Bot</small>
-      </h2>
+      <h1>What the F1? Race Results Bot</h1>
       <div className='button-div'>
         <button onClick={startListening}>Start</button>
         <button onClick={() => sendQuery()}>Send</button>
