@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 /client
-client/node_modules
+/client/node_modules
 /views/node_modules
 /string.js
 
