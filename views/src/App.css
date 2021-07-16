@@ -9,19 +9,28 @@ body {
   text-shadow: 0.2px 0.2px 0.2px #000;
 }
 
+p {
+  text-shadow: none;
+  font-size: 3rem;
+}
+
 .text-input {
   background: hsl(150, 90%, 62%);
   border: none;
   margin-top: 10px;
   font-family: 'Source Sans Pro', monospace;
-  font-size: 2rem;
-  width: 45%;
+  font-size: 3rem;
+  width: 65%;
   color: white;
   padding-top: 20px;
   text-shadow: none;
 }
 .text-input:focus {
   outline: none;
+}
+
+::placeholder {
+  color: white;
 }
 
 .search {
