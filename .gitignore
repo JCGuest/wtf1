@@ -8,6 +8,7 @@
 /client/node_modules
 /views/node_modules
 /string.js
+/views/build
 
 
 # testing
