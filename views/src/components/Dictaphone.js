@@ -32,7 +32,7 @@ const Dictaphone = () => {
     const body = { query: transcript ? transcript : textInput.value };
 
     axios
-      .post('http://localhost:5000/search', body, config)
+      .post('/search', body, config)
       .then((json) => {
         return json.data;
       })
