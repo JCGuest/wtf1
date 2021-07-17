@@ -6,12 +6,12 @@ body {
   place-content: 'center';
   text-align: center;
   font-family: 'Source Sans Pro', sans-serif;
-  text-shadow: 0.2px 0.2px 0.2px #000;
 }
 
 p {
   text-shadow: none;
   font-size: 3rem;
+  color: black;
 }
 
 .text-input {
@@ -21,7 +21,7 @@ p {
   font-family: 'Source Sans Pro', monospace;
   font-size: 3rem;
   width: 65%;
-  color: white;
+  color: black;
   padding-top: 20px;
   text-shadow: none;
 }
@@ -30,7 +30,7 @@ p {
 }
 
 ::placeholder {
-  color: white;
+  color: black;
 }
 
 .search {
@@ -38,13 +38,15 @@ p {
   font-family: 'Source Sans Pro', monospace;
   position: relative;
   font-size: 2rem;
-  color: white;
+  color: black;
   height: 100%;
 }
 
 button {
   font-family: 'Source Sans Pro', monospace;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  border-color: white;
+  border-style: solid;
   background-color: rgb(255, 110, 219);
   border-radius: 20%;
   width: 130px;
@@ -53,5 +55,5 @@ button {
   margin-left: 20px;
   margin-right: 20px;
   margin-bottom: 60px;
-  color: white;
+  color: black;
 }
