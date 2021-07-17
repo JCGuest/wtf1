@@ -3,6 +3,7 @@ import SpeechRecognition, {
   useSpeechRecognition
 } from 'react-speech-recognition';
 import axios from 'axios';
+import checkered from '../images/checkered.png';
 
 const Dictaphone = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
@@ -49,6 +50,7 @@ const Dictaphone = () => {
 
   return (
     <div className='search'>
+      <div className='checkered'></div>
       <h1>What the F1? Race Results Bot</h1>
       <div className='button-div'>
         <button onClick={startListening}>Start</button>
@@ -61,6 +63,7 @@ const Dictaphone = () => {
       ></textarea>
       <p>{transcript ? transcript + '?' : ''}</p>
       <p>{result ? 'Answer: ' + result : ''}</p>
+      <div className='checkered'></div>
     </div>
   );
 };
