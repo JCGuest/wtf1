@@ -1,7 +1,7 @@
 {
-  "name": "wtf1",
+  "name": "wtf1bot",
   "version": "1.0.0",
-  "description": "Voice activated Formula 1 database",
+  "description": "Voice activated Formula 1 results bot",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
