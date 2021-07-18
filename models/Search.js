@@ -109,11 +109,14 @@ class Search {
         while (!name) {
             for (let x = 0; x < gpNames.length; x++) {
                 for (let i = 0; i < queryArray.length; i++) {
-                    gpNames[x] == queryArray[i].toLowerCase() ? (name = gpNames[x]) : -1;
+                    gpNames[x] == queryArray[i].toLowerCase()
+                        ? (name = gpNames[x])
+                        : null;
                 }
             }
         }
         let fullName = name.toLowerCase() + ' grand prix';
+        console.log(fullName);
         return fullName;
     }
     getPosition(query) {
