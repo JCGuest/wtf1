@@ -8,7 +8,9 @@ This application was built with **React**, **Node**, and **Express**.
 
 Using some clever algorithms; it takes input from the user via text or speech-to-text, translates that query into a request to the [Ergast Developer API](https://ergast.com/mrd/), and returns the results.
 
-The "master" branch is optimized for production as it is hosted [here](https://wtf1raceresults.herokuapp.com/). That is the beta but basic functionality should be available.
+### Demo
+
+The "master" branch is optimized for production as it is hosted [here](https://wtf1raceresults.herokuapp.com/). That is the beta but basic functionality should be available. The production build can be found in `./views/build`.
 
 ### To Deploy
 
