@@ -3,19 +3,23 @@ import SpeechRecognition, {
   useSpeechRecognition
 } from 'react-speech-recognition';
 import axios from 'axios';
-import checkered from '../images/checkered.png';
+
+// switch host variable according to environment
+let host = '';
+
+process.env.NODE_ENV == 'development'
+  ? (host = 'http://localhost:5000/search')
+  : (host = '/search');
 
 const Dictaphone = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
-  // const [transcript, resetTranscript] = useState(
-  //   'who won the 2021 austrian grand prix'
-  // );
   const [result, setResult] = useState('');
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null;
   }
 
+  // remove text box and start microphone
   function startListening() {
     const textInput = document.querySelector('#root > div > div > textarea');
     textInput.style.display = 'none';
@@ -32,7 +36,7 @@ const Dictaphone = () => {
     const body = { query: transcript ? transcript : textInput.value };
 
     axios
-      .post('/search', body, config)
+      .post(host, body, config)
       .then((json) => {
         return json.data;
       })
@@ -40,6 +44,7 @@ const Dictaphone = () => {
       .catch((err) => console.error(err));
   }
 
+  // bring text box back and reset transcript
   function resetResult() {
     resetTranscript();
     setResult('');
