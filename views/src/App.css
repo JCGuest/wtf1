@@ -40,7 +40,7 @@ p {
   position: relative;
   font-size: 2rem;
   color: black;
-  height: 100%;
+  height: fit-content;
 }
 
 h1 {
@@ -65,11 +65,10 @@ button {
 
 .checkered {
   width: 100%;
-  height: 7.5vh;
+  height: 48px;
   background: black;
-  min-height: 1vh;
   display: block;
-  place-content: 'center';
-  text-align: center;
+  border: 2px solid black;
+  position: sticky;
   background-image: url(./images/checkered.png);
 }
