@@ -12,11 +12,14 @@ Using some clever algorithms; it takes input from the user via text or speech-to
 
 ### Demo
 
-The "master" branch is optimized for production as it is hosted [here](https://wtf1raceresults.herokuapp.com/). That is the beta but basic functionality should be available. The production build can be found in `./views/build`.
+The "master" branch is optimized for production as it is hosted [here](https://wtf1raceresults.herokuapp.com/). That is the beta but basic functionality should be available. The production build can be found in `/views/build`. Speech-to-text only functions on Chrome.
 
 ### To Deploy
 
-The production build is included in this repo for testing purposes but to deploy locally there is one very simple method. From the parent directory; enter the command `npm run dev`. This will start both the Express and React servers and deploy the development version.
+The production build is included in this repo for testing purposes but to deploy locally there is one very simple method.
+⋅⋅*From the parent directory; enter the command `npm install`
+⋅⋅*From the `/views` directory; enter the command `npm install`
+⋅⋅\*From the parent directory; enter the command `npm run dev`. This will start both the Express and React servers and deploy the development version.
 
 ### TypeScript
 
