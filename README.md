@@ -17,9 +17,10 @@ The "master" branch is optimized for production as it is hosted [here](https://w
 ### To Deploy
 
 The production build is included in this repo for testing purposes but to deploy locally there is one very simple method.
-*From the parent directory; enter the command `npm install`
-*From the `/views` directory; enter the command `npm install`
-\*From the parent directory; enter the command `npm run dev`. This will start both the Express and React servers and deploy the development version.
+
+1. From the parent directory; enter the command `npm install`
+2. From the `/views` directory; enter the command `npm install`
+3. From the parent directory; enter the command `npm run dev`. This will start both the Express and React servers and deploy the development version.
 
 ### TypeScript
 
