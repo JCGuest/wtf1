@@ -2,6 +2,9 @@ const axios = require('axios');
 class Search {
     constructor(searchQuery) {
         this.lastWeek = false;
+        this.champOrLastWeekQuery = false;
+        this.teamChamp = false;
+        this.driverChamp = false;
         this.query = searchQuery;
         this.raceName = this.getName(searchQuery);
         this.year = this.getYear(searchQuery);
@@ -11,10 +14,18 @@ class Search {
         if (this.lastWeek) {
             return this.searchLastWeek();
         }
+        else if (this.teamChamp) {
+            return this.searchTeam();
+        }
+        else if (this.driverChamp) {
+            return this.searchDriverChamp();
+        }
         else {
             return this.searchPast();
         }
     }
+    // in here i will switch the flags for lastWeek, teamChamp, and driverChamp
+    async champOrLastWeekSearch(query) { }
     async searchPast() {
         let roundNumber = await this.findRound();
         if (roundNumber) {
@@ -31,16 +42,18 @@ class Search {
         }
     }
     async findRound() {
-        let answer = await axios
-            .get(`http://ergast.com/api/f1/${this.year}.json`)
-            .then((json) => {
-            let data = json.data;
-            return data.MRData.RaceTable.Races.find((race) => {
-                return race.raceName.toString().toLowerCase() == this.raceName;
-            });
-        })
-            .catch((err) => console.error(err));
-        return answer.round;
+        if (!this.champOrLastWeekQuery) {
+            let answer = await axios
+                .get(`http://ergast.com/api/f1/${this.year}.json`)
+                .then((json) => {
+                let data = json.data;
+                return data.MRData.RaceTable.Races.find((race) => {
+                    return race.raceName.toString().toLowerCase() == this.raceName;
+                });
+            })
+                .catch((err) => console.error(err));
+            return answer.round;
+        }
     }
     getYear(query) {
         let array = query.split(' ');
@@ -111,18 +124,24 @@ class Search {
             'saudi',
             'saudi arabian'
         ];
-        const lastWeekNames = ['week', 'previous', 'weeks'];
+        const champOrLastWeekNames = [
+            'week',
+            'previous',
+            'weeks',
+            "weeks's",
+            'season',
+            'championship'
+        ];
         const queryArray = query.split(' ');
         let name = '';
-        // the next block switches the lastWeek boolean and then
+        // the next block switches the champorlastweek boolean and then
         // prevents the while loop from running
-        if (!this.lastWeek) {
-            for (let x = 0; x < lastWeekNames.length; x++) {
-                for (let i = 0; i < queryArray.length; i++) {
-                    if (queryArray[i].toLowerCase() == lastWeekNames[x]) {
-                        name = 'previous';
-                        this.lastWeek = true;
-                    }
+        for (let x = 0; x < champOrLastWeekNames.length; x++) {
+            for (let i = 0; i < queryArray.length; i++) {
+                if (queryArray[i].toLowerCase() == champOrLastWeekNames[x]) {
+                    name = 'last week or championship search';
+                    this.champOrLastWeekQuery = true; // use this flag to turn off findRound()
+                    this.champOrLastWeekSearch(query); // this function switches between lastweek, team champ, and driver champ searches
                 }
             }
         }
@@ -260,6 +279,31 @@ class Search {
             return (data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
                 ' ' +
                 data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
+        })
+            .catch((err) => console.error(err));
+        return result;
+    }
+    async searchTeam() {
+        let result = await axios
+            .get(`http://ergast.com/api/f1/${this.year}/constructorStandings/${this.position}.json`)
+            .then((json) => {
+            const data = json.data;
+            return data.MRData.StandingsTable.StandingsLists[0]
+                .ConstructorStandings[0].Constructor.name;
+        })
+            .catch((err) => console.error(err));
+        return result;
+    }
+    async searchDriverChamp() {
+        let result = await axios
+            .get(`http://ergast.com/api/f1/${this.year}/driverStandings/${this.position}.json`)
+            .then((json) => {
+            const data = json.data;
+            return (data.MRData.StandingsTable.StandingsLists[0].DriverStandings[0].Driver
+                .givenName +
+                ' ' +
+                data.MRData.StandingsTable.StandingsLists[0].DriverStandings[0].Driver
+                    .familyName);
         })
             .catch((err) => console.error(err));
         return result;
