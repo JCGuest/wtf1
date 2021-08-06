@@ -1,12 +1,21 @@
 const axios = require('axios');
 class Search {
     constructor(searchQuery) {
+        this.lastWeek = false;
         this.query = searchQuery;
         this.raceName = this.getName(searchQuery);
         this.year = this.getYear(searchQuery);
         this.position = this.getPosition(searchQuery);
     }
-    async search() {
+    search() {
+        if (this.lastWeek) {
+            return this.searchLastWeek();
+        }
+        else {
+            return this.searchPast();
+        }
+    }
+    async searchPast() {
         let roundNumber = await this.findRound();
         if (roundNumber) {
             let result = await axios
@@ -19,9 +28,6 @@ class Search {
             })
                 .catch((err) => console.error(err));
             return result;
-        }
-        else {
-            return 'No results';
         }
     }
     async findRound() {
@@ -40,6 +46,7 @@ class Search {
         let array = query.split(' ');
         let year = array.find((word) => {
             let letters = word.split('');
+            // the next line is a bit of a hack that excludes words like 19th or 22nd
             if (!letters.includes('t') && !letters.includes('d')) {
                 if (letters[0] == '1') {
                     return word;
@@ -104,19 +111,29 @@ class Search {
             'saudi',
             'saudi arabian'
         ];
+        const lastWeekNames = ['week', 'previous', 'weeks'];
         const queryArray = query.split(' ');
         let name = '';
+        // the next block switches the lastWeek boolean and then
+        // prevents the while loop from running
+        if (!this.lastWeek) {
+            for (let x = 0; x < lastWeekNames.length; x++) {
+                for (let i = 0; i < queryArray.length; i++) {
+                    if (queryArray[i].toLowerCase() == lastWeekNames[x]) {
+                        name = 'previous';
+                        this.lastWeek = true;
+                    }
+                }
+            }
+        }
         while (!name) {
             for (let x = 0; x < gpNames.length; x++) {
                 for (let i = 0; i < queryArray.length; i++) {
-                    gpNames[x] == queryArray[i].toLowerCase()
-                        ? (name = gpNames[x])
-                        : null;
+                    gpNames[x] == queryArray[i].toLowerCase() ? (name = gpNames[x]) : -1;
                 }
             }
         }
         let fullName = name.toLowerCase() + ' grand prix';
-        console.log(fullName);
         return fullName;
     }
     getPosition(query) {
@@ -187,10 +204,17 @@ class Search {
         }
         return gridTranslator[position];
     }
+    async searchLastWeek() {
+        let result = await axios
+            .get(`http://ergast.com/api/f1/current/last/results/${this.position}.json`)
+            .then((json) => {
+            const data = json.data;
+            return (data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
+                ' ' +
+                data.MRData.RaceTable.Races[0].Results[0].Driver.familyName);
+        })
+            .catch((err) => console.error(err));
+        return result;
+    }
 }
-// const Q = new Search('who won the 2009 Italian Grand Prix?');
-// console.log(Q.query);
-// console.log(Q.url);
-// console.log(Q.raceName);
-// console.log(Q.year);
 module.exports = Search;

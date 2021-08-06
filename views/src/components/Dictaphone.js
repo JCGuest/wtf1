@@ -13,6 +13,7 @@ process.env.NODE_ENV == 'development'
 
 const Dictaphone = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
+  // const transcript = 'who was second place 1994 italian';
   const [result, setResult] = useState('');
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
