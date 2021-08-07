@@ -28,9 +28,34 @@ class Search {
     }
   }
 
-  // in here i will switch the flags for lastWeek, teamChamp, and driverChamp
+  // in here i will switch the flags for lastWeek or call a switch for teamChamp, and driverChamp
   async champOrLastWeekSearch(query: string) {
-    this.lastWeek = true;
+    const lastWeekWords = ['last', 'previous', 'week', 'weeks', "week's"];
+
+    const array = query.split(' ');
+    array.find((word) => {
+      for (let i = 0; i < lastWeekWords.length; i++) {
+        word.toLowerCase() == lastWeekWords[i] ? (this.lastWeek = true) : null;
+      }
+    });
+    if (!this.lastWeek) {
+      this.driverOrTeamSwitch(query);
+    }
+  }
+
+  driverOrTeamSwitch(query: string) {
+    const driverWords = ['driver', 'drivers', "driver's"];
+    const teamWords = ['team', 'constructor']; // not used but maybe in future
+
+    const array = query.split(' ');
+    array.find((word) => {
+      for (let i = 0; i < driverWords.length; i++) {
+        word == driverWords[i] ? (this.driverChamp = true) : null;
+      }
+    });
+    if (!this.driverChamp) {
+      this.teamChamp = true;
+    }
   }
 
   async searchPast() {

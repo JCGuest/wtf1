@@ -26,7 +26,29 @@ class Search {
     }
     // in here i will switch the flags for lastWeek, teamChamp, and driverChamp
     async champOrLastWeekSearch(query) {
-        this.lastWeek = true;
+        const lastWeekWords = ['last', 'previous', 'week', 'weeks', "week's"];
+        const array = query.split(' ');
+        array.find((word) => {
+            for (let i = 0; i < lastWeekWords.length; i++) {
+                word.toLowerCase() == lastWeekWords[i] ? (this.lastWeek = true) : null;
+            }
+        });
+        if (!this.lastWeek) {
+            this.driverOrTeamSwitch(query);
+        }
+    }
+    driverOrTeamSwitch(query) {
+        const driverWords = ['driver', 'drivers', "driver's"];
+        const teamWords = ['team', 'constructor'];
+        const array = query.split(' ');
+        array.find((word) => {
+            for (let i = 0; i < driverWords.length; i++) {
+                word == driverWords[i] ? (this.driverChamp = true) : null;
+            }
+        });
+        if (!this.driverChamp) {
+            this.teamChamp = true;
+        }
     }
     async searchPast() {
         let roundNumber = await this.findRound();
