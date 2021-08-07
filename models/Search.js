@@ -25,7 +25,9 @@ class Search {
         }
     }
     // in here i will switch the flags for lastWeek, teamChamp, and driverChamp
-    async champOrLastWeekSearch(query) { }
+    async champOrLastWeekSearch(query) {
+        this.lastWeek = true;
+    }
     async searchPast() {
         let roundNumber = await this.findRound();
         if (roundNumber) {
@@ -130,7 +132,9 @@ class Search {
             'weeks',
             "weeks's",
             'season',
-            'championship'
+            'championship',
+            'cup',
+            'constructor'
         ];
         const queryArray = query.split(' ');
         let name = '';
