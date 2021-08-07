@@ -30,7 +30,14 @@ class Search {
 
   // in here i will switch the flags for lastWeek or call a switch for teamChamp, and driverChamp
   async champOrLastWeekSearch(query: string) {
-    const lastWeekWords = ['last', 'previous', 'week', 'weeks', "week's"];
+    const lastWeekWords = [
+      'last',
+      'previous',
+      'week',
+      'weeks',
+      "week's",
+      'recent'
+    ];
 
     const array = query.split(' ');
     array.find((word) => {
@@ -173,21 +180,22 @@ class Search {
       'season',
       'championship',
       'cup',
-      'constructor'
+      'constructor',
+      'recent'
     ];
     const queryArray = query.split(' ');
     let name = '';
     // the next block switches the champorlastweek boolean and then
     // prevents the while loop from running
-    for (let x = 0; x < champOrLastWeekNames.length; x++) {
+    champOrLastWeekNames.find((word) => {
       for (let i = 0; i < queryArray.length; i++) {
-        if (queryArray[i].toLowerCase() == champOrLastWeekNames[x]) {
+        if (queryArray[i].toLowerCase() == word) {
           name = 'last week or championship search';
           this.champOrLastWeekQuery = true; // use this flag to turn off findRound()
           this.champOrLastWeekSearch(query); // this function switches between lastweek, team champ, and driver champ searches
         }
       }
-    }
+    });
     while (!name) {
       for (let x = 0; x < gpNames.length; x++) {
         for (let i = 0; i < queryArray.length; i++) {
