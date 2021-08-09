@@ -64,6 +64,7 @@ const Dictaphone = () => {
         <button onClick={resetResult}>Reset</button>
       </div>
       <textarea
+        rows='4'
         className='text-input'
         placeholder='click here to type or click Start'
       ></textarea>
