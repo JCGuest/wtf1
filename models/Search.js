@@ -11,17 +11,21 @@ class Search {
         this.position = this.getPosition(searchQuery);
     }
     search() {
+        // console.log([this.query, this.raceName, this.year, this.position]);
         if (this.lastWeek) {
             return this.searchLastWeek();
         }
         else if (this.teamChamp) {
-            return this.searchTeam();
+            return this.searchTeamChamp();
         }
         else if (this.driverChamp) {
             return this.searchDriverChamp();
         }
-        else {
+        else if (this.year) {
             return this.searchPast();
+        }
+        else {
+            return 'Please enter a valid search query';
         }
     }
     // in here i will switch the flags for lastWeek or call a switch for teamChamp, and driverChamp
@@ -79,16 +83,19 @@ class Search {
                 .then((json) => {
                 let data = json.data;
                 return data.MRData.RaceTable.Races.find((race) => {
-                    return race.raceName.toString().toLowerCase() == this.raceName;
+                    if (race.raceName.toString().toLowerCase() == this.raceName) {
+                        return race.raceName.round;
+                    }
                 });
             })
                 .catch((err) => console.error(err));
-            return answer.round;
+            return answer;
         }
     }
     getYear(query) {
         let array = query.split(' ');
-        let year = array.find((word) => {
+        let year = '';
+        year = array.find((word) => {
             let letters = word.split('');
             // the next line is a bit of a hack that excludes words like 19th or 22nd
             if (!letters.includes('t') && !letters.includes('d')) {
@@ -297,11 +304,11 @@ class Search {
         const queryArray = query.split(' ');
         let position = '';
         while (!position) {
-            for (let x = 0; x < grid.length; x++) {
+            grid.find((word) => {
                 for (let i = 0; i < queryArray.length; i++) {
-                    grid[x] == queryArray[i].toLowerCase() ? (position = grid[x]) : -1;
+                    word == queryArray[i].toLowerCase() ? (position = word) : -1;
                 }
-            }
+            });
         }
         return gridTranslator[position];
     }
@@ -317,7 +324,7 @@ class Search {
             .catch((err) => console.error(err));
         return result;
     }
-    async searchTeam() {
+    async searchTeamChamp() {
         let result = await axios
             .get(`http://ergast.com/api/f1/${this.year}/constructorStandings/${this.position}.json`)
             .then((json) => {
