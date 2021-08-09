@@ -65,10 +65,10 @@ const Dictaphone = () => {
       </div>
       <textarea
         className='text-input'
-        placeholder='click here to type or click Start to record'
+        placeholder='click here to type or click Start'
       ></textarea>
-      <p>{transcript ? transcript + '?' : ''}</p>
-      <p>{result ? 'Answer: ' + result : ''}</p>
+      <p className='transcript-p'>{transcript ? transcript + '?' : ''}</p>
+      <p>{result ? result : ''}</p>
       <div className='checkered'></div>
     </div>
   );
