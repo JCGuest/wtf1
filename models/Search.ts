@@ -5,6 +5,7 @@ class Search {
   public raceName: string;
   public year: string;
   public position: string;
+  public roundNumber: string;
   public lastWeek: boolean = false;
   public champOrLastWeekQuery: boolean = false;
   public teamChamp: boolean = false;
@@ -17,21 +18,21 @@ class Search {
     this.position = this.getPosition(searchQuery);
   }
   search() {
-    // console.log([this.query, this.raceName, this.year, this.position]);
     if (this.lastWeek) {
       return this.searchLastWeek();
     } else if (this.teamChamp) {
       return this.searchTeamChamp();
     } else if (this.driverChamp) {
       return this.searchDriverChamp();
-    } else if (this.year) {
+    } else if (this.year != null) {
       return this.searchPast();
-    } else {
-      return 'Please enter a valid search query';
     }
+    // else {
+    //   return 'Please enter a valid search query';
+    // }
   }
 
-  // in here i will switch the flags for lastWeek or call a switch for teamChamp, and driverChamp
+  // here i will switch the flags for lastWeek or call a switch for teamChamp, and driverChamp
   async champOrLastWeekSearch(query: string) {
     const lastWeekWords = [
       'last',
@@ -69,24 +70,22 @@ class Search {
   }
 
   async searchPast() {
-    let roundNumber = await this.findRound();
-    if (roundNumber) {
-      let result = await axios
-        .get(
-          `http://ergast.com/api/f1/${this.year}/${roundNumber}/results/${this.position}.json`
-        )
-        .then((json) => {
-          const data = json.data;
-          return (
-            data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
-            ' ' +
-            data.MRData.RaceTable.Races[0].Results[0].Driver.familyName
-          );
-        })
-        .catch((err) => console.error(err));
+    this.roundNumber = await this.findRound();
+    let result = await axios
+      .get(
+        `http://ergast.com/api/f1/${this.year}/${this.roundNumber}/results/${this.position}.json`
+      )
+      .then((json) => {
+        const data = json.data;
+        return (
+          data.MRData.RaceTable.Races[0].Results[0].Driver.givenName +
+          ' ' +
+          data.MRData.RaceTable.Races[0].Results[0].Driver.familyName
+        );
+      })
+      .catch((err) => console.error(err));
 
-      return result;
-    }
+    return result;
   }
 
   async findRound() {
@@ -94,15 +93,15 @@ class Search {
       let answer = await axios
         .get(`http://ergast.com/api/f1/${this.year}.json`)
         .then((json) => {
-          let data = json.data;
-          return data.MRData.RaceTable.Races.find((race) => {
+          let round = '';
+          json.data.MRData.RaceTable.Races.forEach((race) => {
             if (race.raceName.toString().toLowerCase() == this.raceName) {
-              return race.raceName.round;
+              round = race.round;
             }
           });
+          return round;
         })
         .catch((err) => console.error(err));
-
       return answer;
     }
   }
