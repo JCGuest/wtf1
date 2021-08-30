@@ -47,13 +47,6 @@ const Dictaphone = () => {
       .catch((err) => console.error(err));
   }
 
-  // bring text box back and reset transcript
-  function resetResult() {
-    resetTranscript();
-    setResult('');
-    setBox(true);
-  }
-
   return (
     <div className='search'>
       <div className='checkered'></div>
@@ -67,7 +60,7 @@ const Dictaphone = () => {
         <button className='btn' onClick={() => sendQuery()}>
           Send
         </button>
-        <button className='btn' onClick={resetResult}>
+        <button className='btn' onClick={() => window.location.reload()}>
           Reset
         </button>
         <h3>
