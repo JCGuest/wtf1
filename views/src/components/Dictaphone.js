@@ -61,9 +61,15 @@ const Dictaphone = () => {
         <em>What the F1? Race Results Bot</em>
       </h1>
       <div className='button-div'>
-        <button onClick={startListening}>Start</button>
-        <button onClick={() => sendQuery()}>Send</button>
-        <button onClick={resetResult}>Reset</button>
+        <button className='btn' onClick={startListening}>
+          Start
+        </button>
+        <button className='btn' onClick={() => sendQuery()}>
+          Send
+        </button>
+        <button className='btn' onClick={resetResult}>
+          Reset
+        </button>
         <h3>
           <em>Enter your question or click Start</em>
         </h3>

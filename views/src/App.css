@@ -63,6 +63,13 @@ button {
   margin-right: 20px;
   margin-bottom: 60px;
   color: black;
+  transition: all 0.5s;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+
+button:hover {
+  color: white;
 }
 
 .checkered {

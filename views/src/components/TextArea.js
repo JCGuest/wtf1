@@ -5,7 +5,7 @@ const TextArea = (props) => {
     <textarea
       rows='4'
       className='text-input'
-      placeholder='click here to type or click Start'
+      placeholder='click here to type'
       value={props.value}
     ></textarea>
   );
