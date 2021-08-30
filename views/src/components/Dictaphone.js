@@ -58,7 +58,7 @@ const Dictaphone = () => {
     <div className='search'>
       <div className='checkered'></div>
       <h1>
-        <em>What the F1? Race and Championship Results Bot</em>
+        <em>What the F1? Race and Championship Results</em>
       </h1>
       <div className='button-div'>
         <button className='btn' onClick={startListening}>
