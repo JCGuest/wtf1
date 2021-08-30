@@ -3,6 +3,8 @@ import SpeechRecognition, {
   useSpeechRecognition
 } from 'react-speech-recognition';
 import axios from 'axios';
+import TextArea from './TextArea';
+import Result from './Result';
 
 // switch host variable according to environment
 let host = '';
@@ -13,8 +15,8 @@ process.env.NODE_ENV == 'development'
 
 const Dictaphone = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
-  // const transcript = 'who was second place 1994 italian';
   const [result, setResult] = useState('');
+  const [textBox, setBox] = useState(true);
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null;
@@ -22,8 +24,8 @@ const Dictaphone = () => {
 
   // remove text box and start microphone
   function startListening() {
-    const textInput = document.querySelector('#root > div > div > textarea');
-    textInput.style.display = 'none';
+    setBox(false);
+    setResult('');
     SpeechRecognition.startListening();
   }
 
@@ -49,27 +51,26 @@ const Dictaphone = () => {
   function resetResult() {
     resetTranscript();
     setResult('');
-    const textInput = document.querySelector('#root > div > div > textarea');
-    textInput.style.display = 'inline';
-    textInput.value = '';
+    setBox(true);
   }
 
   return (
     <div className='search'>
       <div className='checkered'></div>
-      <h1>What the F1? Race Results Bot</h1>
+      <h1>
+        <em>What the F1? Race Results Bot</em>
+      </h1>
       <div className='button-div'>
         <button onClick={startListening}>Start</button>
         <button onClick={() => sendQuery()}>Send</button>
         <button onClick={resetResult}>Reset</button>
+        <h3>
+          <em>Enter your question or click Start</em>
+        </h3>
       </div>
-      <textarea
-        rows='4'
-        className='text-input'
-        placeholder='click here to type or click Start'
-      ></textarea>
-      <p className='transcript-p'>{transcript ? transcript + '?' : ''}</p>
-      <p>{result ? result : ''}</p>
+      {textBox ? <TextArea /> : null}
+      {transcript ? <p className='transcript-p'>{transcript + '?'}</p> : null}
+      {result ? <Result result={result} /> : null}
       <div className='checkered'></div>
     </div>
   );

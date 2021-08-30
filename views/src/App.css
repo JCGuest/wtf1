@@ -27,6 +27,7 @@ p {
   /* the next two lines help it look centered */
   padding-top: 20px;
   text-align: center;
+  display: inline;
 }
 .text-input:focus {
   outline: none;
