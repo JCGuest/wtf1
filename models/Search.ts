@@ -18,6 +18,7 @@ class Search {
     this.position = this.getPosition(searchQuery);
   }
   search() {
+    console.log('search');
     if (this.lastWeek) {
       return this.searchLastWeek();
     } else if (this.teamChamp) {
@@ -25,11 +26,13 @@ class Search {
     } else if (this.driverChamp) {
       return this.searchDriverChamp();
     } else if (this.year != null) {
-      return this.searchPast();
+      if (this.position != null) {
+        return this.searchRacePosition();
+      } else {
+        console.log('raceresults');
+        return this.searchRaceResults();
+      }
     }
-    // else {
-    //   return 'Please enter a valid search query';
-    // }
   }
 
   // here i will switch the flags for lastWeek or call a switch for teamChamp, and driverChamp
@@ -56,7 +59,7 @@ class Search {
 
   driverOrTeamSwitch(query: string) {
     const driverWords = ['driver', 'drivers', "driver's"];
-    const teamWords = ['team', 'constructor']; // not used but maybe in future
+    const teamWords = ['team', 'constructor']; // not used
 
     const array = query.split(' ');
     array.find((word) => {
@@ -69,7 +72,7 @@ class Search {
     }
   }
 
-  async searchPast() {
+  async searchRacePosition() {
     this.roundNumber = await this.findRound();
     let result = await axios
       .get(
@@ -318,7 +321,8 @@ class Search {
       twentyfourth: 24
     };
     const queryArray = query.split(' ');
-    let position = '';
+    let position = null;
+    let result = null;
 
     while (!position) {
       grid.find((word) => {
@@ -327,7 +331,10 @@ class Search {
         }
       });
     }
-    return gridTranslator[position];
+    if (position != null) {
+      result = gridTranslator[position];
+    }
+    return result;
   }
 
   async searchLastWeek() {
@@ -380,6 +387,18 @@ class Search {
       })
       .catch((err) => console.error(err));
     return result;
+  }
+
+  async searchRaceResults() {
+    let result = await axios
+      .get(
+        `http://ergast.com/api/f1/${this.year}/${this.roundNumber}/results.json`
+      )
+      .then((json) => {
+        const data = json.data;
+        console.log(`${this.year} / ${this.roundNumber}`);
+      })
+      .catch((err) => console.log(err));
   }
 }
 

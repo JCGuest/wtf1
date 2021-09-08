@@ -63,9 +63,11 @@ const Dictaphone = () => {
         <button className='btn' onClick={() => window.location.reload()}>
           Reset
         </button>
-        <h3>
-          <em>Enter your question or click Start</em>
-        </h3>
+        {textBox ? (
+          <h3>
+            <em>Enter your question or click Start</em>
+          </h3>
+        ) : null}
       </div>
       {textBox ? <TextArea /> : null}
       {transcript ? <p className='transcript-p'>{transcript + '?'}</p> : null}
