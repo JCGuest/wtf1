@@ -2,8 +2,6 @@
 
 # WTF1 Race-Results-Bot
 
----
-
 I'm a huge Formula One fan and I often find myself looking up statistics and race results. The tool available on the official website works but it's a little unwieldy and slow. This application is a quick and convenient method of getting race and championship statistics.
 
 This application was built with **React**, **Node**, and **Express**.
