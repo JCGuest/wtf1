@@ -4,11 +4,11 @@
 
 ---
 
-I'm a huge Formula One fan. I often find myself looking up stats and race results. The tool available on the official websiteworks but it's a little unwieldy and slow. This application is a quick and convenient method of getting race and championship statistics.
+I'm a huge Formula One fan and I often find myself looking up statistics and race results. The tool available on the official website works but it's a little unwieldy and slow. This application is a quick and convenient method of getting race and championship statistics.
 
 This application was built with **React**, **Node**, and **Express**.
 
-Using some clever algorithms; it takes input from the user via text or speech-to-text, translates that query into a request to the [Ergast Developer API](https://ergast.com/mrd/), and returns the results.
+It takes input from the user via text or speech-to-text, translates that query into a request to the [Ergast Developer API](https://ergast.com/mrd/), and returns the results as text.
 
 ---
 
