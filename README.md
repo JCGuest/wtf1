@@ -1,4 +1,4 @@
-![Heroku app beta](https://imgur.com/a/8qqUOAP)
+![Heroku app beta](https://imgur.com/uXkx1BM.gif)
 
 # WTF1 Race-Results-Bot
 
