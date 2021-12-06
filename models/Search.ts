@@ -37,7 +37,7 @@ class Search {
 
   // here i will switch the flags for lastWeek or call a switch for teamChamp, and driverChamp
   async champOrLastWeekSearch(query: string) {
-    const lastWeekWords = [
+    const lastWeekWords: Array<string> = [
       'last',
       'previous',
       'week',
@@ -46,7 +46,7 @@ class Search {
       'recent'
     ];
 
-    const array = query.split(' ');
+    const array: Array<string> = query.split(' ');
     array.find((word) => {
       for (let i = 0; i < lastWeekWords.length; i++) {
         word.toLowerCase() == lastWeekWords[i] ? (this.lastWeek = true) : null;
@@ -58,10 +58,10 @@ class Search {
   }
 
   driverOrTeamSwitch(query: string) {
-    const driverWords = ['driver', 'drivers', "driver's"];
-    const teamWords = ['team', 'constructor']; // not used
+    const driverWords: Array<string> = ['driver', 'drivers', "driver's"];
+    const teamWords: Array<string> = ['team', 'constructor']; // not used
 
-    const array = query.split(' ');
+    const array: Array<string> = query.split(' ');
     array.find((word) => {
       for (let i = 0; i < driverWords.length; i++) {
         word == driverWords[i] ? (this.driverChamp = true) : null;
@@ -74,7 +74,7 @@ class Search {
 
   async searchRacePosition() {
     this.roundNumber = await this.findRound();
-    let result = await axios
+    let result: string = await axios
       .get(
         `http://ergast.com/api/f1/${this.year}/${this.roundNumber}/results/${this.position}.json`
       )
@@ -93,10 +93,10 @@ class Search {
 
   async findRound() {
     if (!this.champOrLastWeekQuery) {
-      let answer = await axios
+      let answer: string = await axios
         .get(`http://ergast.com/api/f1/${this.year}.json`)
         .then((json) => {
-          let round = '';
+          let round: string = '';
           json.data.MRData.RaceTable.Races.forEach((race) => {
             if (race.raceName.toString().toLowerCase() == this.raceName) {
               round = race.round;
@@ -110,16 +110,13 @@ class Search {
   }
 
   getYear(query: string) {
-    let array = query.split(' ');
-    let year = '';
+    let array: Array<string> = query.split(' ');
+    let year: string = '';
     year = array.find((word) => {
       let letters = word.split('');
       // the next line is a bit of a hack that excludes words like 19th or 22nd
       if (!letters.includes('t') && !letters.includes('d')) {
-        if (letters[0] == '1') {
-          return word;
-        }
-        if (letters[0] == '2') {
+        if (letters[0] == '1' || letters[0] == '2') {
           return word;
         }
       }
@@ -128,7 +125,7 @@ class Search {
   }
 
   getName(query: string) {
-    const gpNames = [
+    const gpNames: Array<string> = [
       'australian',
       'australia',
       'bahrain',
@@ -180,7 +177,7 @@ class Search {
       'saudi',
       'saudi arabian'
     ];
-    const champOrLastWeekNames = [
+    const champOrLastWeekNames: Array<string> = [
       'week',
       'previous',
       'weeks',
@@ -191,8 +188,8 @@ class Search {
       'constructor',
       'recent'
     ];
-    const queryArray = query.split(' ');
-    let name = '';
+    const queryArray: Array<string> = query.split(' ');
+    let name: string = '';
     // the next block switches the champorlastweek boolean and then
     // prevents the while loop from running
     champOrLastWeekNames.find((word) => {
@@ -211,12 +208,12 @@ class Search {
         }
       }
     }
-    let fullName = name.toLowerCase() + ' grand prix';
+    let fullName: string = name.toLowerCase() + ' grand prix';
     return fullName;
   }
 
   getPosition(query) {
-    let grid = [
+    let grid: Array<string> = [
       'winner',
       '1st',
       'won',
@@ -268,61 +265,61 @@ class Search {
       '24th',
       'twentyfourth'
     ];
-    const gridTranslator = {
-      won: 1,
-      winner: 1,
-      first: 1,
-      '1st': 1,
-      second: 2,
-      '2nd': 2,
-      third: 3,
-      '3rd': 3,
-      fourth: 4,
-      '4th': 4,
-      fifth: 5,
-      '5th': 5,
-      sixth: 6,
-      '6th': 6,
-      seventh: 7,
-      '7th': 7,
-      eighth: 8,
-      '8th': 8,
-      ninth: 9,
-      '9th': 9,
-      '10th': 10,
-      tenth: 10,
-      '11th': 11,
-      eleventh: 11,
-      '12th': 12,
-      twelfth: 12,
-      '13th': 13,
-      thirteenth: 13,
-      '14th': 14,
-      fourteenth: 14,
-      '15th': 15,
-      fifteenth: 15,
-      '16th': 16,
-      sixteenth: 16,
-      '17th': 17,
-      seventeenth: 17,
-      '18th': 18,
-      eighteenth: 18,
-      '19th': 19,
-      nineteenth: 19,
-      '20th': 20,
-      twentyth: 20,
-      '21st': 21,
-      twentyfirst: 21,
-      '22nd': 22,
-      twentysecond: 22,
-      '23rd': 23,
-      twentythird: 23,
-      '24th': 24,
-      twentyfourth: 24
+    enum gridTranslator  {
+      won = 1,
+      winner = 1,
+      first= 1,
+      '1st'= 1,
+      secon = 2,
+      '2nd'= 2,
+      third= 3,
+      '3rd'= 3,
+      fourth = 4,
+      '4th' = 4,
+      fifth = 5,
+      '5th' = 5,
+      sixth = 6,
+      '6th' = 6,
+      seventh = 7,
+      '7th' = 7,
+      eighth = 8,
+      '8th' = 8,
+      ninth = 9,
+      '9th' = 9,
+      '10th' = 10,
+      tenth = 10,
+      '11th' = 11,
+      eleventh = 11,
+      '12th' = 12,
+      twelfth = 12,
+      '13th' = 13,
+      thirteenth = 13,
+      '14th' = 14,
+      fourteenth = 14,
+      '15th' = 15,
+      fifteenth = 15,
+      '16th' = 16,
+      sixteenth = 16,
+      '17th' = 17,
+      seventeenth = 17,
+      '18th' = 18,
+      eighteenth = 18,
+      '19th' = 19,
+      nineteenth = 19,
+      '20th'=  20,
+      twentyth = 20,
+      '21st' = 21,
+      twentyfirst = 21,
+      '22nd' =  22,
+      twentysecond = 22,
+      '23rd' = 23,
+      twentythird = 23,
+      '24th'= 24,
+      twentyfourth = 24
     };
-    const queryArray = query.split(' ');
-    let position = null;
-    let result = null;
+    const queryArray: Array<string> = query.split(' ');
+    let position: string = null;
+    let result: string = null;
 
     while (!position) {
       grid.find((word) => {
@@ -338,7 +335,7 @@ class Search {
   }
 
   async searchLastWeek() {
-    let result = await axios
+    let result: string = await axios
       .get(
         `http://ergast.com/api/f1/current/last/results/${this.position}.json`
       )
@@ -356,7 +353,7 @@ class Search {
   }
 
   async searchTeamChamp() {
-    let result = await axios
+    let result: string = await axios
       .get(
         `http://ergast.com/api/f1/${this.year}/constructorStandings/${this.position}.json`
       )
@@ -371,7 +368,7 @@ class Search {
   }
 
   async searchDriverChamp() {
-    let result = await axios
+    let result: string = await axios
       .get(
         `http://ergast.com/api/f1/${this.year}/driverStandings/${this.position}.json`
       )
