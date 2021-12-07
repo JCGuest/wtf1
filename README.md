@@ -26,4 +26,4 @@ The production build is hosted on Heroku [here](https://wtf1raceresults.herokuap
 
 ### TypeScript
 
-The main model is written with TypeScript. To run the TypeScript compiler, enter the command `tsc`. This will start the compiler in watch mode (auto-updates after file changes are made) as per the `tsconfig.json` file.
+The main model is written with TypeScript. The typescript has already been compiled to a Javascript file but you can install the Typescript compiler `node_typescript` with your preffered package installer and enter the command `tsc` in the parent directory of this repository. This will start the compiler in watch mode (auto-updates after file changes are made) as per the `tsconfig.json` file and this will allow you to make changes to Search.ts.
